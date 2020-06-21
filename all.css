@@ -14,3 +14,7 @@
 .form-check-input:checked+label {
     text-decoration: line-through;
 }
+
+.task-count {
+    font-size: 26px;
+}
