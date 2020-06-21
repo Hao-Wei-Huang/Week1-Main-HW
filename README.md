@@ -1,2 +1,3 @@
-# Week1-Main-HW
-Main homework of week1 of  the hexschool live class.  
+# JS直播班 Week1 main HW
+
+TODO LIST
