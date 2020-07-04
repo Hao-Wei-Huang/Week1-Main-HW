@@ -13,14 +13,14 @@
 </head>
 
 <body>
-    <div class="wrap">
+    <div id="app" class="wrap">
         <div class="container mt-5">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">代辦事項</span>
                 </div>
-                <input type="text" class="form-control input-task" placeholder="輸入事項、任務" aria-label="input task" aria-describedby="basic-addon1">
-                <button class="btn btn-primary rounded-left-0 btn-new-item">新增</button>
+                <input type="text" class="form-control input-task" placeholder="輸入事項、任務" aria-label="input task" aria-describedby="basic-addon1" v-model="inputText">
+                <button class="btn btn-primary rounded-left-0 btn-new-item" @click="addItem">新增</button>
             </div>
 
             <div class="card text-center">
@@ -28,10 +28,21 @@
                     清單
                 </div>
                 <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex" v-for="(item,index) in list" :key="index">
+                        <div class="form-check mr-auto">
+                            <input class="form-check-input" type="checkbox" :id="index">
+                            <label class="form-check-label" :for="index">
+                                {{item}}
+                            </label>
+                        </div>
+                        <a href="#" class="btn-item-removal mr-3" :data-index=index @click="removeItem($event)">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </li>
                 </ul>
                 <div class="card-footer text-muted d-flex align-items-center">
                     <h5 class="mr-auto text-dark">
-                        有 <span class="task-count text-success"> 0 </span> 筆事項
+                        有 <span class="task-count text-success"> {{getItemCount}} </span> 筆事項
                     </h5>
                     <button class="btn btn-outline-danger btn-removal-all-item" data-toggle="modal" data-target="#removalModal">
                         清除所有事項
@@ -39,23 +50,23 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="removalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">刪除提醒</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <!-- Modal -->
+        <div class="modal fade" id="removalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="exampleModalLabel">刪除提醒</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
-                <div class="modal-body">
-                    確認刪除所有事項?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-outline-danger btn-removal-all-item" data-dismiss="modal">刪除</button>
+                    </div>
+                    <div class="modal-body">
+                        確認刪除所有事項?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-outline-danger btn-removal-all-item" data-dismiss="modal" @click="removeAllItems">刪除</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,6 +74,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="all.js"></script>
 </body>
 
